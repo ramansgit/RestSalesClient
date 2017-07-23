@@ -60,6 +60,7 @@ public class SalesWsClient {
 			new SalesRestClientImpl().uploadSalesExcelFile(message.getClientId(), SalesClientConstants.FILE_PATH,
 					SalesClientConstants.FILE_NAME);
 		}
+		
 		if (message.getMessage() != null && message.getMessage().equalsIgnoreCase(SalesClientConstants.CSV_READY)) {
 			new SalesRestClientImpl().viewSalesData(message.getClientId());
 		}

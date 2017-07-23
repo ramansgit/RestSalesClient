@@ -29,7 +29,7 @@ public class SalesRestClientImpl implements SalesRestClient {
 			if (!response.isSuccessful()) {
 				throw new IOException("view sales data rest call failed " + response);
 			}
-			System.out.println(response.body().string());
+			System.out.println("********* SALES DATA **********\n\n" +response.body().string());
 
 		} catch (Exception e) {
 			e.printStackTrace();
