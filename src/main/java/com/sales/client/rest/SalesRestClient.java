@@ -12,6 +12,6 @@ public abstract interface SalesRestClient {
 	/**
 	 * allows client to upload sales excel file
 	 */
-	public abstract void uploadSalesExcelFile(String clientId);
+	public abstract void uploadSalesExcelFile(String clientId,String filePath,String fileName);
 
 }
