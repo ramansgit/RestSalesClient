@@ -13,13 +13,13 @@ import okhttp3.internal.framed.Header;
 
 public class SalesClientImpl implements SalesClientInterface {
 
-	public void viewSalesData(String sessionId) {
+	public void viewSalesData(String clientId) {
 
 		try {
 			OkHttpClient client = new OkHttpClient();
 
 			Request request = new Request.Builder().url(SalesClientConstants.SALES_SERVICE_REST_EP).get()
-					.addHeader("sessionId", sessionId).build();
+					.addHeader("clientId", clientId).build();
 
 			Response response = client.newCall(request).execute();
 			if (!response.isSuccessful()) {
@@ -33,7 +33,7 @@ public class SalesClientImpl implements SalesClientInterface {
 
 	}
 
-	public void uploadSalesExcelFile(String sessionId) {
+	public void uploadSalesExcelFile(String clientId) {
 		File file = null;
 		try {
 			OkHttpClient client = new OkHttpClient();
@@ -45,7 +45,7 @@ public class SalesClientImpl implements SalesClientInterface {
 					"seeded_excel_for_java_test.xlsx", RequestBody.create(MEDIA_TYPE_XLSX, file)).build();
 
 			Request request = new Request.Builder().url(SalesClientConstants.SALES_SERVICE_REST_EP)
-					.addHeader("sessionId", sessionId).post(requestBody).build();
+					.addHeader("clientId", clientId).post(requestBody).build();
 
 			Response response = client.newCall(request).execute();
 			if (!response.isSuccessful()) {
@@ -63,7 +63,7 @@ public class SalesClientImpl implements SalesClientInterface {
 	}
 
 	public static void main(String[] args) {
-		// new SalesClientImpl().uploadSalesExcelFile();
+		 new SalesClientImpl().uploadSalesExcelFile("client");
 
 		// new SalesClientImpl().viewSalesData();
 	}

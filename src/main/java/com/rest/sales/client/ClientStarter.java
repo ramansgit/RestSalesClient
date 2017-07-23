@@ -1,7 +1,7 @@
 package com.rest.sales.client;
 
 import java.net.URI;
-import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
 
 import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
@@ -9,29 +9,24 @@ import javax.websocket.WebSocketContainer;
 
 import org.eclipse.jetty.util.component.LifeCycle;
 
-
 public class ClientStarter {
-	public static void main( final String[] args ) throws Exception {
-		final String client = UUID.randomUUID().toString().substring( 0, 8 );
-		
-		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();				
-		final String uri = "ws://localhost:8080/ws";		
-		
-		try( Session session = container.connectToServer( BroadcastClientEndpoint.class, URI.create( uri ) ) ) {
-			
-			session.getBasicRemote().sendObject("Message #" );
-//			for( int i = 1; i <= 10; ++i ) {
-//				session.getBasicRemote().sendObject( new Message( client, "Message #" + i ) );
-//				Thread.sleep( 1000 );
-//			}
+	private static CountDownLatch latch;
+
+	public static void main(final String[] args) throws Exception {
+
+		// final String clientId = UUID.randomUUID().toString().substring(0, 8);
+		latch = new CountDownLatch(1);
+
+		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+		final String uri = "ws://localhost:8080/ws";
+
+		try (Session session = container.connectToServer(BroadcastClientEndpoint.class, URI.create(uri))) {
+			latch.await();
 		}
-		
-		// JSR-356 has no concept of Container lifecycle.
-		// (This is an oversight on the spec's part)
-		// This stops the lifecycle of the Client WebSocketContainer
-		if( container instanceof LifeCycle ) {
-		  //  ( ( LifeCycle )container ).stop();
+
+		if (container instanceof LifeCycle) {
+			// ( ( LifeCycle )container ).stop();
 		}
+		System.in.read();
 	}
 }
-

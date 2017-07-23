@@ -7,11 +7,11 @@ public abstract interface SalesClientInterface {
 	 * 
 	 * @return
 	 */
-	public abstract void viewSalesData(String sessionId);
+	public abstract void viewSalesData(String clientId);
 	
 	/**
 	 * allows client to upload sales excel file
 	 */
-	public abstract void uploadSalesExcelFile(String sessionId);
+	public abstract void uploadSalesExcelFile(String clientId);
 
 }
