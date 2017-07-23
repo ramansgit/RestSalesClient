@@ -1,6 +1,6 @@
-package com.rest.sales.client;
+package com.sales.client.rest;
 
-public abstract interface SalesClientInterface {
+public abstract interface SalesRestClient {
 
 	/**
 	 * allows client to view sales data

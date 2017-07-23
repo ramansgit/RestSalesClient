@@ -1,4 +1,4 @@
-package com.rest.sales.client;
+package com.sales.client.model;
 
 import java.io.StringReader;
 import java.util.Collections;

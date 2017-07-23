@@ -1,4 +1,4 @@
-package com.rest.sales.client;
+package com.sales.client.rest;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,17 +9,17 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.internal.framed.Header;
 
-public class SalesClientImpl implements SalesClientInterface {
+public class SalesRestClientImpl implements SalesRestClient {
+	public static final String SALES_SERVICE_REST_EP = "http://localhost:8080/rest/api/v1/sales";
 
 	public void viewSalesData(String clientId) {
 
 		try {
 			OkHttpClient client = new OkHttpClient();
 
-			Request request = new Request.Builder().url(SalesClientConstants.SALES_SERVICE_REST_EP).get()
-					.addHeader("clientId", clientId).build();
+			Request request = new Request.Builder().url(SALES_SERVICE_REST_EP).get().addHeader("clientId", clientId)
+					.build();
 
 			Response response = client.newCall(request).execute();
 			if (!response.isSuccessful()) {
@@ -44,8 +44,8 @@ public class SalesClientImpl implements SalesClientInterface {
 			RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("upload",
 					"seeded_excel_for_java_test.xlsx", RequestBody.create(MEDIA_TYPE_XLSX, file)).build();
 
-			Request request = new Request.Builder().url(SalesClientConstants.SALES_SERVICE_REST_EP)
-					.addHeader("clientId", clientId).post(requestBody).build();
+			Request request = new Request.Builder().url(SALES_SERVICE_REST_EP).addHeader("clientId", clientId)
+					.post(requestBody).build();
 
 			Response response = client.newCall(request).execute();
 			if (!response.isSuccessful()) {
@@ -63,10 +63,9 @@ public class SalesClientImpl implements SalesClientInterface {
 	}
 
 	public static void main(String[] args) {
-		 new SalesClientImpl().uploadSalesExcelFile("client");
+		new SalesRestClientImpl().uploadSalesExcelFile("client");
 
 		// new SalesClientImpl().viewSalesData();
 	}
 
-	
 }
